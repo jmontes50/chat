@@ -1,0 +1,24 @@
+<h1>Login</h1>
+<hr>
+<div class="row">
+  <div class="col-md-6">
+    <button class="btn btn-primary btn-block btn-lg"
+            (click)="iniciarSesionFB()">
+      <i class="fa fa-facebook"></i> Iniciar Sesión con Facebook
+    </button>
+  </div>
+  <div class="col-md-6">
+    <form>
+      <input type="text"
+            name="nombre"
+             [(ngModel)]="nombre"
+             class="form-control"
+             placeholder="Ingrese su Usuario"
+             autofocus>
+      <button class="btn btn-block btn-primary mt-4"
+              (click)="ingresar()">
+        Ingresar al Chat
+      </button>
+    </form>
+  </div>
+</div>

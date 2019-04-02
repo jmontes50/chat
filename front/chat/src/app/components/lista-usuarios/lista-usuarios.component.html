@@ -1,0 +1,12 @@
+<h1>Usuarios On Fire</h1>
+<hr>
+<button class="btn btn-danger btn-block">
+  Cerrar Sesión
+</button>
+<hr>
+<ul class="list-group">
+  <li *ngFor="let usuario of usuariosConectados"
+      class="list-group-item">
+      {{usuario.nombre}}
+  </li>
+</ul>

@@ -1,0 +1,16 @@
+<h1>Mensajes: El Congreso</h1>
+<hr>
+
+<div id="mensajes">
+  
+</div>
+
+<form (ngSubmit)="enviar()">
+  <input type="text"
+          [(ngModel)]="mensaje"
+          class="form-control input-chat"
+          name="texto"
+          placeholder="Mensaje..."
+          autocomplete="off"
+          autofocus>
+</form>
