@@ -24,17 +24,22 @@ export default class Server {
     escucharSockets(){
         console.log("Escuchando sockets");
         this.io.on('connect',(cliente)=>{
-
-            console.log(`${cliente.id} se ha  conectado`);
+            // Creo un usuario con el id de la maquina de la que se conecta
             let usuario = new Usuario(cliente.id);
+            //Agrego el usuario recientemente conectado a la lista de usuarios
             this.usuariosConectados.agregar(usuario);
-            console.log("Lista de usuarios");
-            console.log(this.usuariosConectados.getLista());
-            
+            // emitir el evento 'usuarios-activos' enviando todos
+            // los usuarios activos a quienes estén suscritos
+            this.io.emit('usuarios-activos',this.usuariosConectados.getLista());
             
             cliente.on('disconnect',()=>{
-                console.log(`${cliente.id} se ha desconectado`);
+                //borro el usuario de la lista de usuarios conectados 
+                // cuando éste se desconecta
                 this.usuariosConectados.borrarUsuario(cliente.id);
+                // emito el evento 'usuarios-activos' para que todos vean
+                // la nueva lista de usuarios activos
+                console.log("desconectado");
+                this.io.emit('usuarios-activos',this.usuariosConectados.getLista());
             });
 
             cliente.on('enviar-mensaje',(payload)=>{
@@ -47,11 +52,21 @@ export default class Server {
                 console.log(this.usuariosConectados.getLista());
             });
 
+            cliente.on("cerrar-sesion",()=>{
+                this.usuariosConectados.actualizarNombre(cliente.id,"sin-nombre");
+                this.io.emit('usuarios-activos',this.usuariosConectados.getLista());    
+            });
+
             cliente.on('obtener-usuarios',()=>{
                 // this.io.emit('usuarios-activos',this.usuariosConectados.getLista());
                 // this.io.in(id)=> emite un socket para un cliente en especifico
                 // dado su id
-                this.io.in(cliente.id).emit('usuarios-activos',this.usuariosConectados.getLista());
+                console.log("se ejecuto obtener usuarios");
+                setTimeout(() => {
+                    console.log("emimienti");
+                    this.io.emit('usuarios-activos',this.usuariosConectados.getLista());    
+                }, 100);
+                
             });
         });
     }

@@ -8,10 +8,17 @@ import { Usuario } from '../models/usuario';
 export class WebsocketService {
   
   public socketStatus = false;
-  public usuario:Usuario;
+  public usuario:Usuario = new Usuario('');
   
   constructor(private _socket:Socket) {
     this.checkStatus();
+    // this.cargarStorage();
+  }
+  cargarStorage(){
+    if(localStorage.getItem("usuario")){
+      this.usuario.nombre = JSON.parse(localStorage.getItem("usuario")).nombre;
+      this.loginWs(this.usuario.nombre);
+    }
   }
 
   checkStatus(){
@@ -38,7 +45,7 @@ export class WebsocketService {
    * sesión
    */
   loginWs(nombre:string){
-    console.log("Configurando al usuario ",nombre);
+
     this.usuario = new Usuario(nombre);
     this.emitir("configurar-usuario",this.usuario);
     this.guardarStorage();
@@ -51,6 +58,7 @@ export class WebsocketService {
   cerrarSesion(){
     this.usuario = null;
     localStorage.removeItem('usuario');
+    this.emitir('cerrar-sesion');
   }
 
 }

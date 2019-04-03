@@ -57,12 +57,17 @@ export class LoginComponent implements OnInit {
               console.log(response);
             },
             (response)=>{
-              console.log("Éxito");
               this.nombre = response.name;
+              // this.ingresar();
+              // Mismo comportamiento de la función ingresar
+              // Pero no enviamos un evento
+              this._sWebsocket.loginWs(this.nombre);
+              this._router.navigateByUrl("/mensajes");
             });
   }
 
-  ingresar(){
+  ingresar(evento){
+    evento.preventDefault();
     this._sWebsocket.loginWs(this.nombre);
     this._router.navigateByUrl("/mensajes");
   }
