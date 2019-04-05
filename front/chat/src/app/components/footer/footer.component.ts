@@ -7,7 +7,7 @@ import {WebsocketService} from '../../services/websocket.service';
 })
 export class FooterComponent implements OnInit {
 
-  constructor(private _sWebsocket:WebsocketService) {}
+  constructor(public _sWebsocket:WebsocketService) {}
   
   ngOnInit() {
 

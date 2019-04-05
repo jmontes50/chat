@@ -35,6 +35,12 @@ export class LoginComponent implements OnInit {
        fjs.parentNode.insertBefore(js, fjs);
      }(document, 'script', 'facebook-jssdk'));
 
+
+    //  Validar si el localStorage existe
+    // si existe, redireccionar automáticamente a MensajesComponent
+    if(localStorage.getItem("usuario")){
+      this._router.navigateByUrl("mensajes");
+    }
   }
 
   iniciarSesionFB(){

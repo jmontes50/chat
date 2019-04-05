@@ -12,7 +12,7 @@ export class WebsocketService {
   
   constructor(private _socket:Socket) {
     this.checkStatus();
-    // this.cargarStorage();
+    this.cargarStorage();
   }
   cargarStorage(){
     if(localStorage.getItem("usuario")){

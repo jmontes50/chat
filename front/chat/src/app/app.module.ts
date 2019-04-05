@@ -13,7 +13,7 @@ import { MensajesComponent } from './components/mensajes/mensajes.component';
 import { LoginComponent } from './components/login/login.component';
 
 const config: SocketIoConfig = {
-  url: 'http://localhost:3700',
+  url: 'https://pruebachatjgarnica.herokuapp.com/',
   options: {}
 };
 
