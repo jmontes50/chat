@@ -13,16 +13,23 @@ export class ChatComponent implements OnInit {
 
   ngOnInit() {
     this.div = document.getElementById("mensajes");
-    this._sWebsocket.escuchar('mensaje-nuevo').subscribe((mensaje:string)=>{
+    this._sWebsocket.escuchar('mensaje-nuevo').subscribe((payload:any)=>{
       let p = document.createElement("p");
-      p.innerHTML = mensaje;
+      p.innerHTML = payload.nombre+ " dice: "+payload.mensaje;
       this.div.appendChild(p);
+      setTimeout(() => {
+        this.div.scrollTop = this.div.scrollHeight;
+      }, 50);
+
     })
   }
-
   enviar(){
     console.log("Enviado mensaje...");
-    this._sWebsocket.emitir('enviar-mensaje',this.mensaje);
+    let contenido = {
+      mensaje: this.mensaje,
+      nombre: JSON.parse(localStorage.getItem("usuario")).nombre
+    };
+    this._sWebsocket.emitir('enviar-mensaje',contenido);
     this.mensaje = "";
   }
 
